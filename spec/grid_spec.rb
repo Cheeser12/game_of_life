@@ -66,4 +66,31 @@ describe Grid do
             expect(g.to_s).to eq(target_grid)
         end
     end
+    
+    describe "#update" do
+        it "updates each cell based on its neighbors" do
+            g = Grid.new
+            
+            # (0, 0) has two live neighbors, so it should live
+            g.cells[0][0].alive = true
+            g.cells[0][1].alive = true
+            g.cells[1][0].alive = true
+            
+            # (5, 5) is dead but has three live neighbors,
+            # so it should become alive next iteration
+            g.cells[5][4].alive = true
+            g.cells[5][6].alive = true
+            g.cells[6][5].alive = true
+            
+            # (12, 12) has only one live neighbor, so it should
+            # should die
+            g.cells[12][12].alive = true
+            g.cells[12][13].alive = true
+    
+            g.update
+            expect(g.cells[0][0].alive).to eq(true)
+            expect(g.cells[5][5].alive).to eq(true)
+            expect(g.cells[12][12].alive).to eq(false)
+        end
+    end
 end

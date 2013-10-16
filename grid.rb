@@ -35,4 +35,17 @@ class Grid
         
         grid
     end
+    
+    def update
+        new_cells = Array.new(21) { Array.new(21) { Cell.new } }
+        
+        @cells.each_index do |i|
+            @cells.each_index do |j|
+                cell = @cells[i][j]
+                new_cells[i][j].alive = cell.update(neighbors(i, j))
+            end
+        end
+        
+        @cells = new_cells
+    end
 end
