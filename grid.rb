@@ -23,4 +23,16 @@ class Grid
         
         neighbors
     end
+    
+    def to_s
+        grid = ""
+        @cells.each do |row|
+           row.each do |cell|
+                grid += cell.to_s + " "
+           end   
+           grid += "\n"
+        end
+        
+        grid
+    end
 end
