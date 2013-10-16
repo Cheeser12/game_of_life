@@ -13,7 +13,8 @@ describe Game do
         end
         
         it "throws an error when the file does not exist" do
-            expect { Game.new("fakeFile.txt") }.to raise_error()
+            expect { Game.new("fakeFile.txt") }.to raise_error(
+              IOError, "Input file not found")
         end
     end
 end

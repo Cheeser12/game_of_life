@@ -3,17 +3,17 @@ require "../cell"
 
 describe Grid do
     it "contains 21 rows and 21 columns of cells" do
-        g = Grid.new
-        expect(g.cells.length).to eq(21)
-        g.cells.each do |row|
-            expect(row.length).to eq(21)
-            row.each do |cell|
-                expect(cell).to be_a(Cell)
-            end
-        end        
+      g = Grid.new
+      expect(g.cells.length).to eq(21)
+      g.cells.each do |row|
+          expect(row.length).to eq(21)
+          row.each do |cell|
+              expect(cell).to be_a(Cell)
+          end
+      end        
     end    
 
-    describe "#new" do   
+    describe "#new" do
         it "accepts a list of initial living cell coordinates when created" do
             g = Grid.new([[5, 8], [1, 2], [3, 6]]) 
             expect(g.cells[5][8].alive).to eq(true)
@@ -63,24 +63,24 @@ describe Grid do
     end
 
     describe "#to_s" do
-        it "outputs the grid of cells" do
-            g = Grid.new
-            expect(g.to_s).to eq(("- "*21 + "\n")*21)
-            
-            # Try with some cells set to alive
-            g.cells[4][10].alive = true
-            g.cells[5][11].alive = true
-            g.cells[6][12].alive = true
-            
-            first_four = ("- "*21 + "\n")*4
-            fifth = ("- "*10 + "* " + "- "*10 + "\n")
-            sixth = ("- "*11 + "* " + "- "*9 + "\n")
-            seventh = ("- "*12 + "* " + "- "*8 + "\n")
-            last_fourteen = ("- "*21 + "\n")*14
-            target_grid = first_four + fifth + sixth + seventh + last_fourteen
-            
-            expect(g.to_s).to eq(target_grid)
-        end
+      it "outputs the grid of cells" do
+        g = Grid.new
+        expect(g.to_s).to eq(("- "*21 + "\n")*21)
+        
+        # Try with some cells set to alive
+        g.cells[4][10].alive = true
+        g.cells[5][11].alive = true
+        g.cells[6][12].alive = true
+        
+        first_four = ("- "*21 + "\n")*4
+        fifth = ("- "*10 + "* " + "- "*10 + "\n")
+        sixth = ("- "*11 + "* " + "- "*9 + "\n")
+        seventh = ("- "*12 + "* " + "- "*8 + "\n")
+        last_fourteen = ("- "*21 + "\n")*14
+        target_grid = first_four + fifth + sixth + seventh + last_fourteen
+        
+        expect(g.to_s).to eq(target_grid)
+      end
     end
     
     describe "#update" do
