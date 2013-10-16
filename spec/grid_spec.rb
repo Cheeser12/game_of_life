@@ -12,7 +12,23 @@ describe Grid do
             end
         end        
     end    
-    
+
+    describe "#new" do   
+        it "accepts a list of initial living cell coordinates when created" do
+            g = Grid.new([[5, 8], [1, 2], [3, 6]]) 
+            expect(g.cells[5][8].alive).to eq(true)
+            expect(g.cells[1][2].alive).to eq(true)
+            expect(g.cells[3][6].alive).to eq(true)
+        end 
+        
+        it "validates the list of coordinates given to it" do
+            expect { Grid.new([[3, 5, 6]]) }.to raise_error(ArgumentError,
+                "Invalid number of coordinates")
+            expect { Grid.new([[22, 5]])}.to raise_error(IndexError,
+                "Coordinates out of bounds")
+        end
+    end
+
     describe "#neighbors" do
         it "validates the given row and column indices" do
             g = Grid.new

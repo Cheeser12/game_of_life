@@ -2,9 +2,26 @@ require_relative "./cell"
 
 class Grid
     attr_reader :cells
-  
-    def initialize
-        @cells = Array.new(21) { Array.new(21) {Cell.new}}
+
+    def initialize(*args)
+        if args.size == 1 || args.size == 0 then
+            @cells = Array.new(21) { Array.new(21) {Cell.new}}
+        end
+
+        if args.size == 1 then 
+            living = args[0]
+            living.each do |coord|
+                raise ArgumentError, "Invalid number of coordinates" if (
+                    coord.length != 2)
+                
+                i = coord[0]
+                j = coord[1]
+                
+                raise IndexError, "Coordinates out of bounds" if (
+                    i < 0 || j < 0 || i >= 21 || j >= 21) 
+                @cells[coord[0]][coord[1]].alive = true
+            end
+        end
     end
     
     def neighbors(i, j)
