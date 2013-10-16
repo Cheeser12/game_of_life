@@ -7,9 +7,9 @@ class Cell
     
     def to_s
         if @alive then
-            "*"
+            "\x1b[36;1m*"
         else
-            "-"
+            "\x1b[0m-"
         end
     end
     
