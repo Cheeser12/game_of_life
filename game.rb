@@ -1,6 +1,8 @@
+#!/usr/bin/env ruby
 require_relative "./grid"
 
-grid = Grid.new("live.txt")
+raise ArgumentError, "Need file name argument" if ARGV[0] == nil
+grid = Grid.new(ARGV[0])
 
 print grid.to_s
 sleep(0.5)
