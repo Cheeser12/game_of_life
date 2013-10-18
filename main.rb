@@ -1,11 +1,11 @@
-require_relative "./game"
+require_relative "./grid"
 
-game = Game.new("live.txt")
+grid = Grid.new("live.txt")
 
-print game.grid.to_s
+print grid.to_s
 sleep(0.5)
 while true do
- game.grid.update 
- print "\r\e[21A\e[J" + game.grid.to_s
- sleep(0.5)
+  grid.update 
+  print "\r\e[21A\e[J" + grid.to_s
+  sleep(0.5)
 end

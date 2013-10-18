@@ -9,10 +9,12 @@ class Grid
     end
 
     if args.size == 1 then
-        living = args[0]
+        living = read_file(args[0])
         living.each do |coord|
             raise ArgumentError, "Invalid number of coordinates" if (
                 coord.length != 2)
+            raise ArgumentError, "Coordinate entry was not an integer" if (
+                !coord[0].is_a?(Integer) || !coord[1].is_a?(Integer))
 
             i = coord[0]
             j = coord[1]
@@ -63,5 +65,24 @@ class Grid
       end
 
       @cells = new_cells
+  end
+
+  private
+
+  def read_file(file)
+    raise IOError, "File does not exist" unless File.exists?(file)
+    f = File.new(file)
+    coord_list = Array.new
+    
+    f.each_line do |line|
+      line.chomp
+      nums = line.split(" ")
+      raise ArgumentError, "Invalid number of coordinates" if (
+                nums.length != 2)
+
+      coord_list << [nums[0].to_i, nums[1].to_i]
+    end
+
+    coord_list
   end
 end
