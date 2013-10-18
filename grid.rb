@@ -1,7 +1,7 @@
 require_relative "./cell"
 
 class Grid
-  attr_reader :cells
+  attr_reader :cells 
 
   def initialize(*args)
     if args.size == 1 || args.size == 0 then
@@ -11,16 +11,9 @@ class Grid
     if args.size == 1 then
       living = read_file(args[0])
       living.each do |coord|
-        raise ArgumentError, "Invalid number of coordinates" if (
-          coord.length != 2)
-        raise ArgumentError, "Coordinate entry was not an integer" if (
-          !coord[0].is_a?(Integer) || !coord[1].is_a?(Integer))
-
         i = coord[0]
         j = coord[1]
 
-        raise IndexError, "Coordinates out of bounds" if (
-          i < 0 || j < 0 || i >= 21 || j >= 21)
         @cells[coord[0]][coord[1]].alive = true
       end
     end
@@ -60,13 +53,14 @@ class Grid
     @cells.each_index do |i|
       @cells.each_index do |j|
         cell = @cells[i][j]
-        new_cells[i][j].alive = cell.update(neighbors(i, j))
+        new_cells[i][j].alive = update_cell(cell, neighbors(i, j))
       end
     end
 
     @cells = new_cells
   end
 
+  
   private
 
   def read_file(file)
@@ -80,9 +74,33 @@ class Grid
       raise ArgumentError, "Invalid number of coordinates" if (
                 nums.length != 2)
 
-      coord_list << [nums[0].to_i, nums[1].to_i]
+      i = nums[0].to_i
+      j = nums[1].to_i
+      raise IndexError, "Coordinates out of bounds" if (
+          i < 0 || j < 0 || i >= 21 || j >= 21)
+      coord_list << [i, j]
     end
 
     coord_list
+  end
+
+  def update_cell(cell, neighbors)
+    n_alive = 0
+    
+    neighbors.each do |neighbor|
+      n_alive += 1 if neighbor.alive
+    end
+
+    # We don't want to change the internal state of this cell!
+    # It would affect other cells when the grid updates in an
+    # iteration. Instead, we just return the next state
+    # so the grid can construct a new cell
+    new_alive = cell.alive
+    if cell.alive then
+      new_alive = false if (n_alive < 2 || n_alive > 3)
+    else
+      new_alive = true if (n_alive == 3)            
+    end
+    new_alive
   end
 end
