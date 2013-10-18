@@ -2,16 +2,16 @@ require "../grid"
 require "../cell"
 
 describe Grid do
-    it "contains 21 rows and 21 columns of cells" do
-      g = Grid.new
-      expect(g.cells.length).to eq(21)
-      g.cells.each do |row|
-          expect(row.length).to eq(21)
-          row.each do |cell|
-            expect(cell).to be_a(Cell)
-          end
-      end        
-    end    
+  it "contains 21 rows and 21 columns of cells" do
+    g = Grid.new
+    expect(g.cells.length).to eq(21)
+    g.cells.each do |row|
+      expect(row.length).to eq(21)
+      row.each do |cell|
+        expect(cell).to be_a(Cell)
+      end
+    end        
+  end    
 
     describe "#new" do
       it "accepts a file with a list of initial live cells" do
