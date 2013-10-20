@@ -15,7 +15,7 @@ describe Grid do
 
     describe "#new" do
       it "accepts a file with a list of initial live cells" do
-        g = Grid.new("test.txt")
+        g = Grid.new("test_inputs/input.txt")
         expect(g.cells[0][0].alive).to be_true
         expect(g.cells[5][5].alive).to be_true
         expect(g.cells[12][12].alive).to be_true
@@ -25,12 +25,12 @@ describe Grid do
                                                             "File does not exist")
       end
       it "raises an error when the file has an invalid entry" do
-        expect { Grid.new("bad_file.txt") }.to raise_error(ArgumentError, 
-                                                           "Invalid number of coordinates")
+        expect { Grid.new("test_inputs/bad_file.txt") }.to raise_error(ArgumentError, 
+                                                                       "Invalid number of coordinates")
       end
       it "raises an error if an entry is out of bounds" do
-        expect { Grid.new("bad_file2.txt") }.to raise_error(IndexError, 
-                                                            "Coordinates out of bounds")
+        expect { Grid.new("test_inputs/bad_file2.txt") }.to raise_error(IndexError, 
+                                                                        "Coordinates out of bounds")
       end
     end
 
@@ -72,20 +72,19 @@ describe Grid do
     describe "#to_s" do
       it "outputs the grid of cells" do
         g = Grid.new
-        expect(g.to_s).to eq(("\x1b[0m- "*21 + "\n")*21)
-       
+        empty_grid = ""
+        f = File.open("test_grids/empty_grid.txt")
+        f.each_line {|line| empty_grid += line }
+        expect(g.to_s).to eq(empty_grid) 
+
         # Try with some cells set to alive
         g.cells[4][10].alive = true
         g.cells[5][11].alive = true
         g.cells[6][12].alive = true
         
-        first_four = ("\x1b[0m- "*21 + "\n")*4
-        fifth = ("\x1b[0m- "*10 + "\x1b[36;1m* " + "\x1b[0m- "*10 + "\n")
-        sixth = ("\x1b[0m- "*11 + "\x1b[36;1m* " + "\x1b[0m- "*9 + "\n")
-        seventh = ("\x1b[0m- "*12 + "\x1b[36;1m* " + "\x1b[0m- "*8 + "\n")
-        last_fourteen = ("\x1b[0m- "*21 + "\n")*14
-        target_grid = first_four + fifth + sixth + seventh + last_fourteen
-        
+        target_grid = "" 
+        f = File.open("test_grids/populated_grid.txt")
+        f.each_line {|line| target_grid += line }
         expect(g.to_s).to eq(target_grid)
       end
     end
