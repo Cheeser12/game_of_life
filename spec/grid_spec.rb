@@ -29,15 +29,18 @@ describe Grid do
                                                            "Invalid number of coordinates")
       end
       it "raises an error if an entry is out of bounds" do
-        expect { Grid.new("bad_file2.txt") }.to raise_error(IndexError, "Coordinates out of bounds")
+        expect { Grid.new("bad_file2.txt") }.to raise_error(IndexError, 
+                                                            "Coordinates out of bounds")
       end
     end
 
     describe "#neighbors" do
       it "validates the given row and column indices" do
         g = Grid.new
-        expect { g.neighbors(21, 5) }.to raise_error(IndexError, "Row index is out of bounds")
-        expect { g.neighbors(5, 21) }.to raise_error(IndexError, "Column index is out of bounds")
+        expect { g.neighbors(21, 5) }.to raise_error(IndexError, 
+                                                     "Row index is out of bounds")
+        expect { g.neighbors(5, 21) }.to raise_error(IndexError, 
+                                                     "Column index is out of bounds")
       end
       context "on a corner cell" do
         it "returns a list of the 3 neighboring cells" do

@@ -1,7 +1,7 @@
 class Cell
   attr_accessor :alive
 
-  def initialize()
+  def initialize
     @alive = false
   end
     
