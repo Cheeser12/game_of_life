@@ -1,8 +1,17 @@
 #!/usr/bin/env ruby
 require_relative "./grid"
+require_relative "./gen_random"
 
-raise ArgumentError, "Need file name argument" if ARGV[0] == nil
-grid = Grid.new(ARGV[0])
+raise ArgumentError, "Need seed argument" if ARGV[0] == nil
+
+if ARGV[0] == "random" then
+  gen_random()
+  seed_file = "seeds/random.txt"
+else
+  seed_file = "seeds/" + ARGV[0] + ".txt"
+end
+
+grid = Grid.new(seed_file)
 
 print grid.to_s
 sleep(0.5)
